@@ -20,7 +20,7 @@
     <div class="text-center py-10">
         <h1 class="text-4xl font-bold text-blue-800">Selamat Datang di Website TernakMart!</h1>
 
-        <img src="{{ asset('images/landing-image.png') }}" alt="TernakMart" class="mx-auto mt-8 w-auto h-auto">
+        <img src="{{ asset('images/logo.png') }}" alt="LogoTernakMart" class="mx-auto mt-8 w-auto h-auto">
 
         <p class="text-blue-600 mt-4">Lokasi Pusat : Jl. Diponegoro No. 60, Surabaya | Lokasi Outlet Cabang : Jl. Raya Semampir No. 49 E, Medokan Semampir, Surabaya</p>
         <p class="text-blue-600">Jam Operasional Toko : Senin-Sabtu 08:00-17:00 | Telepon: +62 821-4088-4744</p>
