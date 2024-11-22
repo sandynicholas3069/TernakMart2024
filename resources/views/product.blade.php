@@ -54,7 +54,7 @@
                             Edit
                             </a>
                         </td>
-                        <td class="border px-4 py-2">
+                        <td class="px-4 py-2 border-b text-center">
                             <form action="{{ route('product.destroy', $product) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
