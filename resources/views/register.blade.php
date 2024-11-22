@@ -11,7 +11,7 @@
     <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
         <h1 class="font-bold text-lg">TernakMart</h1>
         <div class="space-x-4">
-            <a href="{{ route('landing') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-600">Back</a>
+            <a href="{{ route('landing') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Back</a>
         </div>
     </nav>
 
@@ -28,8 +28,8 @@
                 <option value="pelanggan">Pelanggan</option>
                 <option value="pemilik">Pemilik</option>
             </select>
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Register</button>
-            <a href="{{ route('login') }}" class="text-blue-500 text-sm">Login</a>
+            <button type="submit" class="w-full bg-blue-500 text-white hover:bg-blue-600 p-2 rounded">Register</button>
+            <a href="{{ route('login') }}" class="text-blue-300 text-sm hover:underline transition-colors duration-300">Login</a>
         </form>
     </div>
 

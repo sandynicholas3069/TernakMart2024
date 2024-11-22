@@ -11,7 +11,7 @@
     <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
         <h1 class="font-bold text-lg">TernakMart</h1>
         <div class="space-x-4">
-            <a href="{{ route('landing') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-600">Back</a>
+            <a href="{{ route('landing') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Back</a>
         </div>
     </nav>
 
@@ -22,8 +22,8 @@
             <h2 class="text-white text-lg font-bold">Login</h2>
             <input type="email" name="email" placeholder="Input Your Email" class="w-full border p-2 rounded">
             <input type="password" name="password" placeholder="Input Your Password" class="w-full border p-2 rounded">
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Login</button>
-            <a href="{{ route('register') }}" class="text-blue-500 text-sm">Register</a>
+            <button type="submit" class="w-full bg-blue-500 text-white hover:bg-blue-600 p-2 rounded">Login</button>
+            <a href="{{ route('register') }}" class="text-blue-300 text-sm hover:underline transition-colors duration-300">Register</a>
         </form>
     </div>
 

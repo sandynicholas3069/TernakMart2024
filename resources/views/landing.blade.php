@@ -11,8 +11,8 @@
     <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
         <h1 class="font-bold text-lg">TernakMart</h1>
         <div class="space-x-4">
-            <a href="{{ route('login') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-600">Login</a>
-            <a href="{{ route('register') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-600">Register</a>
+            <a href="{{ route('login') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Login</a>
+            <a href="{{ route('register') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Register</a>
         </div>
     </nav>
 
