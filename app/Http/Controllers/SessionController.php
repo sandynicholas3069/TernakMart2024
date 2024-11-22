@@ -23,6 +23,10 @@ class SessionController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'Email Wajib Diisi',
+            'email.email' => 'Format Email Tidak Valid',
+            'password.required' => 'Password Wajib Diisi',
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -41,6 +45,7 @@ class SessionController extends Controller
             'email' => 'Email atau password salah.',
         ]);
     }
+
 
     public function dashboard()
     {

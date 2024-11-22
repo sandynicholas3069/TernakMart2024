@@ -15,15 +15,42 @@
         </div>
     </nav>
 
-    <!-- Landing Page -->
+    <!-- Login Form -->
     <div class="min-h-screen bg-gray-50 flex items-center justify-center">
-        <form action="{{ route('login') }}" method="POST" class="bg-gray-800 p-6 rounded shadow-md space-y-4">
+        <form action="{{ route('login') }}" method="POST" class="bg-gray-800 p-6 rounded shadow-md space-y-4 w-full max-w-md">
             @csrf
             <h2 class="text-white text-lg font-bold">Login</h2>
-            <input type="email" name="email" placeholder="Input Your Email" class="w-full border p-2 rounded">
-            <input type="password" name="password" placeholder="Input Your Password" class="w-full border p-2 rounded">
-            <button type="submit" class="w-full bg-blue-500 text-white hover:bg-blue-600 p-2 rounded">Login</button>
-            <a href="{{ route('register') }}" class="text-blue-300 text-sm hover:underline transition-colors duration-300">Register</a>
+            
+            <!-- Display Error Messages -->
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-800 p-6 rounded shadow-md space-y-4 w-full max-w-md">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+            <!-- Email Field -->
+            <input type="email" name="email" placeholder="Input Your Email" 
+                   class="w-full border p-2 rounded focus:ring-blue-500 focus:border-blue-500">
+            
+            <!-- Password Field -->
+            <input type="password" name="password" placeholder="Input Your Password" 
+                   class="w-full border p-2 rounded focus:ring-blue-500 focus:border-blue-500">
+            
+            <!-- Submit Button -->
+            <button type="submit" 
+                    class="w-full bg-blue-500 text-white hover:bg-blue-600 p-2 rounded transition duration-300">
+                Login
+            </button>
+            
+            <!-- Register Link -->
+            <a href="{{ route('register') }}" 
+               class="text-blue-300 text-sm hover:underline transition-colors duration-300">
+                Register
+            </a>
         </form>
     </div>
 
