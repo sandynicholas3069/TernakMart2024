@@ -12,6 +12,7 @@
         <h1 class="font-bold text-lg">TernakMart</h1>
         <div class="space-x-4">
             <a href="{{ route('login') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-600">Login</a>
+            <a href="{{ route('register') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-600">Register</a>
         </div>
     </nav>
 
@@ -29,7 +30,7 @@
         <p class="text-blue-600">Selamat Menikmati Pengalaman Belanja Online di TernakMart!</p>
     </div>
 
-    <!-- Footer (Optional) -->
+    <!-- Footer -->
     <footer class="bg-blue-800 text-white text-center p-4 mt-auto">
         <p>&copy; 2024 TernakMart. All Rights Reserved.</p>
     </footer>
