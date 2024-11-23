@@ -6,7 +6,7 @@
     <title>Catalogue Page TernakMart</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white flex flex-col min-h-screen">
+<body class="bg-gray-300 flex flex-col min-h-screen">
     <!-- Navbar -->
     <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
         <h1 class="font-bold text-lg">TernakMart - User</h1>
@@ -15,36 +15,29 @@
         </div>
     </nav>
 
-    <!-- Catalogue Page -->
-    <div class="container mx-auto p-4">
-        <h1 class="text-4xl text-center font-bold mb-4">Katalog Produk</h1>
+    <!-- Catalogue Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+        @foreach($products as $product)
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <!-- Kategori -->
+            <div class="flex justify-between items-center bg-white px-4 py-2">
+                <span class="text-blue-500 text-sm font-medium">{{ $product->kategori_produk }}</span>
+                <span class="text-green-500 text-sm font-medium">{{ $product->kategori_daging }}</span>
+            </div>
 
-        <table class="min-w-full table-auto bg-gray-800 text-white rounded-md">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2 border-b text-center">Nomor</th>
-                    <th class="px-4 py-2 border-b text-center">Kategori Produk</th>
-                    <th class="px-4 py-2 border-b text-center">Kategori Daging</th>
-                    <th class="px-4 py-2 border-b text-center">Nama Produk</th>
-                    <th class="px-4 py-2 border-b text-center">Harga Produk</th>
-                    <th class="px-4 py-2 border-b text-center">Jumlah Stok</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($products as $product)
-                    <tr>
-                        <td class="px-4 py-2 border-b text-center">{{ $product->id }}</td>
-                        <td class="px-4 py-2 border-b text-center">{{ $product->kategori_produk }}</td>
-                        <td class="px-4 py-2 border-b text-center">{{ $product->kategori_daging }}</td>
-                        <td class="px-4 py-2 border-b text-center">{{ $product->nama_produk }}</td>
-                        <td class="px-4 py-2 border-b text-center">Rp. {{ number_format($product->harga_produk, 0, ',', '.') }}</td>
-                        <td class="px-4 py-2 border-b text-center">{{ $product->jumlah_stok }}</td>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <!-- Gambar Produk -->
+            <img src="{{ asset('images/product_' . $product->id . '.jpg') }}" 
+            alt="{{ $product->nama_produk }}" 
+            class="w-full h-48 object-cover">
+
+            <!-- Detail Produk -->
+            <div class="p-4">
+                <h2 class="text-lg font-semibold">{{ $product->nama_produk }}</h2>
+                <p class="text-green-600 font-bold mt-2">Rp {{ number_format($product->harga_produk, 0, ',', '.') }}</p>
+                <p class="text-gray-500 mt-1">Stok: {{ $product->jumlah_stok }}</p>
+            </div>
+        </div>
+        @endforeach
     </div>
 
     <!-- Footer -->
