@@ -19,7 +19,7 @@
     <div class="min-h-screen bg-gray-50 flex items-center justify-center">
         <form action="{{ route('register') }}" method="POST" class="bg-gray-800 p-6 rounded shadow-md space-y-4">
             @csrf
-            <h2 class="text-white text-lg font-bold">Register</h2>
+            <h2 class="text-2xl text-center text-white font-bold">Register</h2>
             <input type="text" name="name" placeholder="Name" class="w-full border p-2 rounded">
             <input type="email" name="email" placeholder="Email" class="w-full border p-2 rounded">
             <input type="password" name="password" placeholder="Password" class="w-full border p-2 rounded">

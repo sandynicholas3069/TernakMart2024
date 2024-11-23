@@ -17,7 +17,7 @@
 
     <!-- Product Page -->
     <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">Daftar Produk</h1>
+        <h1 class="text-4xl text-center font-bold mb-4">Daftar Produk</h1>
         <div class="flex justify-between items-center mb-2">
             <a href="{{ route('product.create') }}" class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 transition">Tambah Produk</a>
         </div>
@@ -29,7 +29,7 @@
         <table class="min-w-full table-auto bg-gray-800 text-white rounded-md">
             <thead>
                 <tr>
-                    <th class="px-4 py-2 border-b text-center">ID</th>
+                    <th class="px-4 py-2 border-b text-center">Nomor</th>
                     <th class="px-4 py-2 border-b text-center">Kategori Produk</th>
                     <th class="px-4 py-2 border-b text-center">Kategori Daging</th>
                     <th class="px-4 py-2 border-b text-center">Nama Produk</th>

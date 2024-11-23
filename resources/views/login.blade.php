@@ -19,7 +19,7 @@
     <div class="min-h-screen bg-gray-50 flex items-center justify-center">
         <form action="{{ route('login') }}" method="POST" class="bg-gray-800 p-6 rounded shadow-md space-y-4 w-full max-w-md">
             @csrf
-            <h2 class="text-white text-lg font-bold">Login</h2>
+            <h2 class="text-2xl text-center text-white font-bold">Login</h2>
             
             <!-- Display Error Messages -->
             @if ($errors->any())
