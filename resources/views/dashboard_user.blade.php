@@ -11,6 +11,7 @@
     <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
         <h1 class="font-bold text-lg">TernakMart - User</h1>
         <div class="space-x-4">
+            <a href="{{ route('catalogue.index') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Katalog</a>
             <a href="{{ route('logout') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Logout</a>
         </div>
     </nav>
