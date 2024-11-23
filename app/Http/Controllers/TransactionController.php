@@ -22,10 +22,10 @@ class TransactionController extends Controller
 
         $product = Product::find($request->product_id);
         $cart[$product->id] = [
-            'name' => $product->name,
+            'name' => $product->nama_produk,
             'quantity' => $request->quantity,
-            'price' => $product->price,
-            'total' => $product->price * $request->quantity,
+            'price' => $product->harga_produk,
+            'total' => $product->harga_produk * $request->quantity,
         ];
 
         session()->put('cart', $cart);
@@ -48,13 +48,14 @@ class TransactionController extends Controller
             TransactionItem::create([
                 'transaction_id' => $transaction->id,
                 'product_id' => $productId,
+                'name' => $item['name'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
 
             // Update product stock
             $product = Product::find($productId);
-            $product->stock -= $item['quantity'];
+            $product->jumlah_stok -= $item['quantity'];
             $product->save();
         }
 
@@ -77,7 +78,7 @@ class TransactionController extends Controller
         foreach ($transaction->items as $item) {
             // Restore product stock
             $product = $item->product;
-            $product->stock += $item->quantity;
+            $product->jumlah_stok += $item->quantity;
             $product->save();
         }
 

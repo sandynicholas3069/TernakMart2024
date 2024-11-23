@@ -19,7 +19,7 @@ class CreateTransactionItemsTable extends Migration
             $table->unsignedBigInteger('product_id'); // Relasi ke tabel products
             $table->string('name'); // Nama produk
             $table->integer('quantity'); // Jumlah produk yang dibeli
-            $table->decimal('price', 10, 2); // Harga per unit produk
+            $table->integer('price'); // Harga per unit produk
             $table->timestamps(); // Kolom created_at dan updated_at
 
             // Foreign key ke tabel transactions
