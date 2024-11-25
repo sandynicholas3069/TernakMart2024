@@ -16,12 +16,8 @@ Route::get('/dashboard', [SessionController::class, 'dashboard'])->name('dashboa
 Route::get('/logout', [SessionController::class, 'logout'])->name('logout');
 Route::resource('product', ProductController::class);
 Route::get('/catalogue', [CatalogueController::class, 'index'])->name('catalogue.index');
-Route::middleware(['auth'])->group(function () {
-    Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
-    Route::post('/transaction/add', [TransactionController::class, 'addToCart'])->name('transaction.add');
-    Route::post('/transaction/delete/{productId}', [TransactionController::class, 'deleteFromCart'])->name('transaction.delete');
-    Route::get('/transaction/confirm', [TransactionController::class, 'confirmCart'])->name('transaction.confirm');
-    Route::post('/transaction/checkout', [TransactionController::class, 'checkout'])->name('transaction.checkout');
-    Route::get('/transaction/history', [TransactionController::class, 'history'])->name('history.index');
-    Route::delete('/transaction/{id}', [TransactionController::class, 'destroy'])->name('transaction.destroy');
-});
+Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+Route::post('/transaction/add', [TransactionController::class, 'addToCart'])->name('transaction.addToCart');
+Route::post('/transaction/checkout', [TransactionController::class, 'checkout'])->name('transaction.checkout');
+Route::get('/transaction/history', [TransactionController::class, 'history'])->name('history.index');
+Route::delete('/transaction/{id}', [TransactionController::class, 'destroy'])->name('transaction.destroy');

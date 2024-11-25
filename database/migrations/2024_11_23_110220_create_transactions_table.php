@@ -16,13 +16,11 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id(); // ID transaksi (auto-increment)
-            $table->unsignedBigInteger('user_id'); // Relasi ke tabel users
-            $table->dateTime('transaction_date')->default(DB::raw('CURRENT_TIMESTAMP')); // Tanggal dan waktu transaksi
+            $table->foreignId('user_id')->constrained(); // Menghubungkan dengan tabel users
+            $table->enum('status', ['pending', 'completed']);
+            $table->timestamp('transaction_date')->useCurrent(); // Tanggal transaksi
             $table->integer('total_price'); // Total harga transaksi (number, no decimal)
             $table->timestamps(); // Kolom created_at dan updated_at
-
-            // Foreign key ke tabel users
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
