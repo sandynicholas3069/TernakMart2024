@@ -13,7 +13,7 @@ class TransactionController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('transaction.index', compact('products'));
+        return view('transaction', compact('products'));
     }
 
     public function addToCart(Request $request)
@@ -30,6 +30,27 @@ class TransactionController extends Controller
 
         session()->put('cart', $cart);
         return redirect()->route('transaction.index')->with('success', 'Product added to cart!');
+    }
+
+    public function deleteFromCart($productId)
+    {
+        // Logika untuk menghapus produk dari keranjang berdasarkan $productId
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
+            session()->put('cart', $cart);
+
+            return response()->json(['success' => true, 'message' => 'Produk berhasil dihapus dari keranjang.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Produk tidak ditemukan dalam keranjang.']);
+    }
+
+    public function confirmCart()
+    {
+        $cart = session()->get('cart', []);
+        return view('confirm', compact('cart'));
     }
 
     public function checkout()
@@ -68,7 +89,7 @@ class TransactionController extends Controller
         // Mengambil semua transaksi user yang sedang login, dengan item detailnya
         $transactions = Transaction::with('items')->where('user_id', Auth::id())->get();
 
-        return view('history.index', compact('transactions'));
+        return view('history', compact('transactions'));
     } 
 
     public function destroy($id)
