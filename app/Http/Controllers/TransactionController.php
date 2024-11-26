@@ -4,14 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Transaction;
-use App\Models\TransactionItem; // Mengimpor model TransactionItem
+use App\Models\TransactionItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB; // Untuk penggunaan DB raw expressions
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    public function index(Request $request)
+    // Menampilkan daftar transaksi
+    public function index()
+    {
+        $transactions = Transaction::with('user', 'items')->get();
+        return view('transaction', compact('transactions'));
+    }
+
+    // Form untuk membuat transaksi
+    public function create(Request $request)
     {
         // Ambil parameter filter dan search dari request
         $kategoriProduk = $request->input('kategori_produk');
@@ -33,137 +41,86 @@ class TransactionController extends Controller
             $query->where('nama_produk', 'LIKE', '%' . $search . '%');
         }
 
-        // Ambil produk sesuai dengan filter
         $products = $query->get();
 
-        // Cek apakah transaksi pending sudah ada
-        $transaction = Transaction::where('user_id', Auth::id())
-            ->where('status', 'pending')
-            ->first();
-
-        // Ambil item-item dalam keranjang jika transaksi ditemukan
-        $transactionItems = $transaction ? $transaction->items : [];
-        $total_price = $transaction ? $transaction->total_price : 0;
-
-        // Return view dengan data produk dan keranjang
-        return view('transaction', compact('products', 'kategoriProduk', 'kategoriDaging', 'search', 'transactionItems', 'total_price'));
+        return view('shopping', compact('products', 'kategoriProduk', 'kategoriDaging', 'search'));
     }
 
-    public function addToCart(Request $request)
+    // Menyimpan transaksi baru
+    public function store(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+        // Validasi input - 'nullable' untuk jumlah yang bisa kosong (0)
+        $validated = $request->validate([
+            'produk' => 'required|array',
+            'produk.*.id' => 'required|exists:products,id',
+            'produk.*.jumlah' => 'nullable|integer|min:0', // Jumlah boleh 0
         ]);
 
-        $product = Product::find($request->product_id);
-
-        if (!$product) {
-            return redirect()->route('transaction.index')->with('error', 'Product not found!');
-        }
-
-        if ($product->jumlah_stok < $request->quantity) {
-            return redirect()->route('transaction.index')->with('error', 'Insufficient stock for this product.');
-        }
-
-        $transaction = Transaction::firstOrCreate(
-            ['user_id' => Auth::id(), 'status' => 'pending'],
-            ['total_price' => 0, 'transaction_date' => now()]
-        );
-
-        $transactionItem = $transaction->items()->where('product_id', $product->id)->first();
-
-        if ($transactionItem) {
-            $transactionItem->quantity += $request->quantity;
-
-            if ($transactionItem->quantity <= 0) {
-                $transactionItem->delete();
-            } else {
-                $transactionItem->save();
-            }
-        } else {
-            $transaction->items()->create([
-                'transaction_id' => $transaction->id,
-                'product_id' => $product->id,
-                'name' => $product->nama_produk,
-                'quantity' => $request->quantity,
-                'price' => $product->harga_produk,
-            ]);
-        }
-
-        $this->updateTotalPrice($transaction);
-
-        return redirect()->route('transaction.index')->with('success', 'Product added to cart!');
-    }
-
-    private function updateTotalPrice($transaction)
-    {
-        $totalPrice = $transaction->items->sum(function($item) {
-            return $item->quantity * $item->price;
+        // Filter produk yang memiliki jumlah lebih dari 0 (jumlah 0 diabaikan)
+        $produk = array_filter($validated['produk'], function ($produk) {
+            return isset($produk['jumlah']) && $produk['jumlah'] > 0; // Hanya produk dengan jumlah > 0 yang diproses
         });
 
-        $transaction->total_price = $totalPrice;
-        $transaction->save();
-    }
-
-    public function checkout()
-    {
-        $transaction = Transaction::where('user_id', Auth::id())
-            ->where('status', 'pending')
-            ->first();
-
-        if (!$transaction || $transaction->items->isEmpty()) {
-            return redirect()->route('transaction.index')->with('error', 'Cart is empty!');
+        // Pastikan ada produk yang dipilih dengan jumlah > 0
+        if (empty($produk)) {
+            return redirect()->route('transaction.create')->with('error', 'Tidak ada produk yang dipilih.');
         }
 
+        DB::transaction(function () use ($produk) {
+            // Membuat transaksi baru
+            $transaction = Transaction::create([
+                'user_id' => Auth::id(),
+                'transaction_date' => now(),
+                'total_price' => 0,
+            ]);
+
+            $total_price = 0;
+
+            foreach ($produk as $item) {
+                // Cari produk berdasarkan ID
+                $product = Product::findOrFail($item['id']);
+
+                // Validasi stok produk cukup
+                if ($product->jumlah_stok < $item['jumlah']) {
+                    throw new \Exception("Stok untuk {$product->nama_produk} tidak mencukupi.");
+                }
+
+                // Kurangi stok produk
+                $product->decrement('jumlah_stok', $item['jumlah']);
+
+                // Tambahkan item transaksi
+                TransactionItem::create([
+                    'transaction_id' => $transaction->id,
+                    'product_id' => $product->id,
+                    'name' => $product->nama_produk,
+                    'quantity' => $item['jumlah'],
+                    'price' => $product->harga_produk,
+                ]);
+
+                // Hitung total harga
+                $total_price += $product->harga_produk * $item['jumlah'];
+            }
+
+            // Update total harga transaksi
+            $transaction->update(['total_price' => $total_price]);
+        });
+
+        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dibuat!');
+    }
+
+    // Menghapus transaksi
+    public function destroy(Transaction $transaction)
+    {
         DB::transaction(function () use ($transaction) {
             foreach ($transaction->items as $item) {
                 $product = $item->product;
-                if ($product->jumlah_stok < $item->quantity) {
-                    throw new \Exception("Stock for {$product->nama_produk} is insufficient.");
-                }
-
-                $product->jumlah_stok -= $item->quantity;
+                $product->jumlah_stok += $item->quantity;
                 $product->save();
             }
 
-            $transaction->status = 'completed';
-            $transaction->save();
+            $transaction->delete();
         });
 
-        return redirect()->route('history.index')->with('success', 'Transaction completed!');
-    }
-
-    public function history()
-    {
-        // Menampilkan transaksi yang sudah selesai
-        $transactions = Transaction::with('items')  // Mengambil data items untuk setiap transaksi
-            ->where('user_id', Auth::id())
-            ->where('status', 'completed')
-            ->get();
-
-        return view('history', compact('transactions'));
-    }
-
-    public function destroy($id)
-    {
-        $transaction = Transaction::findOrFail($id);
-
-        // Pastikan transaksi yang ingin dihapus adalah milik pengguna yang sedang login
-        if ($transaction->user_id !== Auth::id()) {
-            return redirect()->route('history.index')->with('error', 'You do not have permission to delete this transaction.');
-        }
-
-        // Kembalikan stok produk
-        foreach ($transaction->items as $item) {
-            $product = $item->product;
-            $product->jumlah_stok += $item->quantity;
-            $product->save();
-        }
-
-        // Hapus transaksi
-        $transaction->delete();
-
-        return redirect()->route('history.index')->with('success', 'Transaction deleted!');
+        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dihapus!');
     }
 }

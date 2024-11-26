@@ -16,9 +16,8 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id(); // ID transaksi (auto-increment)
-            $table->foreignId('user_id')->constrained(); // Menghubungkan dengan tabel users
-            $table->enum('status', ['pending', 'completed']);
-            $table->timestamp('transaction_date')->useCurrent(); // Tanggal transaksi
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Menghubungkan dengan tabel users
+            $table->timestamp('transaction_date')->default(now()); // Tanggal transaksi
             $table->integer('total_price'); // Total harga transaksi (number, no decimal)
             $table->timestamps(); // Kolom created_at dan updated_at
         });

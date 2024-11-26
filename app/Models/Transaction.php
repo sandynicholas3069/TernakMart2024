@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'transaction_date', 'total_price', 'status'];
+    protected $fillable = ['user_id', 'transaction_date', 'total_price'];
 
     // Relasi ke model TransactionItem
     public function items()
@@ -18,7 +18,7 @@ class Transaction extends Model
     }
 
     // Relasi ke User
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
