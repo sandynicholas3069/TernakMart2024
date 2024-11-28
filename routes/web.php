@@ -20,3 +20,4 @@ Route::get('/transactions', [TransactionController::class, 'index'])->name('tran
 Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transaction.create');
 Route::post('/transactions', [TransactionController::class, 'store'])->name('transaction.store');
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transaction.destroy');
+Route::get('/product-performance', [TransactionController::class, 'productPerformance'])->name('product.performance');
