@@ -123,4 +123,14 @@ class TransactionController extends Controller
 
         return redirect()->route('transaction.index')->with('success', 'Transaksi berhasil dihapus!');
     }
+
+    public function productPerformance()
+    {
+        // Fetch the total sales for each product
+        $productSales = TransactionItem::selectRaw('name, SUM(quantity) as total_sales')
+            ->groupBy('name')
+            ->get();
+
+        return view('product_performance', compact('productSales'));
+    }
 }
