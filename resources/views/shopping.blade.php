@@ -86,6 +86,7 @@
 
                             <!-- Quantity Control -->
                             <div class="flex items-center mt-4">
+                                <input type="hidden" name="produk[{{ $product->id }}][id]" value="{{ $product->id }}">
                                 <button type="button" onclick="adjustQuantity({{ $product->id }}, false)" class="bg-red-600 text-white px-2 py-1 rounded-l-lg hover:bg-red-700">-</button>
                                 <input type="number" id="quantity-{{ $product->id }}" name="produk[{{ $product->id }}][jumlah]" value="0" min="0" class="w-12 text-center bg-gray-700 text-gray-200 border border-gray-500">
                                 <button type="button" onclick="adjustQuantity({{ $product->id }}, true)" class="bg-green-600 text-white px-2 py-1 rounded-r-lg hover:bg-green-700">+</button>

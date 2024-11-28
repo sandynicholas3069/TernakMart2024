@@ -105,7 +105,7 @@ class TransactionController extends Controller
             $transaction->update(['total_price' => $total_price]);
         });
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dibuat!');
+        return redirect()->route('transaction.index')->with('success', 'Transaksi berhasil dibuat!');
     }
 
     // Menghapus transaksi
@@ -121,6 +121,6 @@ class TransactionController extends Controller
             $transaction->delete();
         });
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dihapus!');
+        return redirect()->route('transaction.index')->with('success', 'Transaksi berhasil dihapus!');
     }
 }
