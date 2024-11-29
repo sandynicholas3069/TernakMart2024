@@ -5,10 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekap Pendapatan Transaksi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* CSS untuk tampilan cetak */
+        @media print {
+            /* Menyembunyikan bagian yang tidak diperlukan saat pencetakan */
+            .no-print {
+                display: none !important;
+            }
+
+            /* Memastikan konten tetap rapi saat dicetak */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
+
+            .content {
+                margin-top: 20px;
+            }
+
+            .total-revenue {
+                font-size: 18px;
+                font-weight: bold;
+                margin-top: 20px;
+            }
+
+            /* Membuat tabel dan konten utama lebih jelas saat dicetak */
+            table {
+                width: 100%; /* Mengatur lebar tabel 100% */
+                table-layout: fixed; /* Mengatur agar tabel memiliki panjang lebar tetap */
+                margin: 20px 0;
+            }
+
+            th, td {
+                border: 1px solid #000000; /* Warna border menjadi hitam */
+                padding: 20px; /* Menambah padding untuk membuat isi lebih jelas */
+                color: #000000; /* Warna teks isi tabel menjadi hitam */
+            }
+
+            th {
+                background-color: #f2f2f2; /* Warna latar belakang header tabel */
+                text-align: center; /* Menyelaraskan teks header ke tengah */
+            }
+
+            td {
+                background-color: #ffffff; /* Warna latar belakang sel tabel */
+                text-align: justify; /* Menyelaraskan teks isi tabel (selain header) ke kiri */
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Navbar -->
-    <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
+    <nav class="bg-blue-500 p-4 flex justify-between items-center text-white no-print">
         <h1 class="font-bold text-lg">TernakMart - Admin</h1>
         <div class="space-x-4">
             <a href="{{ route('dashboard') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Back</a>
@@ -20,7 +69,7 @@
         <h1 class="text-4xl text-center font-bold mb-4">{{ $title }}</h1>
 
         <!-- Filter Form -->
-        <div class="min-w-full py-6">
+        <div class="min-w-full py-6 no-print">
             <div class="bg-gray-800 shadow-lg rounded-lg p-6">
                 <form method="GET" action="{{ route('transaction.recap') }}" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
@@ -48,7 +97,7 @@
         </div>
 
         <!-- Tombol Tampilkan Semua -->
-        <div class="flex justify-between items-center mb-2">
+        <div class="flex justify-between items-center mb-2 no-print">
             @if(request('day') || request('month') || request('year'))
                 <a href="{{ route('transaction.recap') }}" 
                 class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 transition">
@@ -96,13 +145,18 @@
         </table>
 
         <!-- Total Revenue -->
-        <div class="mt-6 p-4 bg-green-100 rounded shadow text-green-800">
+        <div class="mt-6 p-4 bg-green-100 rounded shadow text-green-800 mb-4">
             <h2 class="text-xl font-bold">Total Pendapatan: Rp. {{ number_format($totalRevenue, 0, ',', '.') }}</h2>
         </div>
+
+        <!-- Tombol Print -->
+        <button onclick="window.print()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition no-print">
+            Print Rekap Transaksi
+        </button>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-blue-800 text-white text-center p-4 mt-auto">
+    <footer class="bg-blue-800 text-white text-center p-4 mt-auto no-print">
         <p>&copy; 2024 TernakMart. All Rights Reserved.</p>
     </footer>
 </body>
