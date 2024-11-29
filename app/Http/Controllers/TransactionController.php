@@ -159,4 +159,33 @@ class TransactionController extends Controller
         return view('product_performance', compact('productSales', 'day', 'month', 'year'));
     }
 
+    public function recapTransaction(Request $request)
+    {
+        // Ambil parameter filter dari request
+        $day = $request->input('day');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        // Query dasar untuk mengambil data transaksi dengan user dan item
+        $query = Transaction::with('user', 'items');
+
+        // Terapkan filter jika semua parameter tanggal, bulan, dan tahun diisi
+        if ($day && $month && $year) {
+            $query->whereDate('transaction_date', '=', "$year-$month-$day");
+        }
+
+        // Eksekusi query
+        $transactions = $query->get();
+
+        // Hitung total pendapatan
+        $totalRevenue = $transactions->sum('total_price');
+
+        // Kirim data ke view
+        $title = ($day && $month && $year)
+            ? "Rekap Pendapatan Transaksi TernakMart pada " . date('d F Y', strtotime("$year-$month-$day"))
+            : "Rekap Pendapatan Transaksi TernakMart";
+
+        return view('recap', compact('transactions', 'totalRevenue', 'title', 'day', 'month', 'year'));
+    }
+
 }

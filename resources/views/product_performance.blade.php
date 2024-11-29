@@ -22,7 +22,7 @@
         <h2 class="text-4xl text-center font-bold mb-4">Kinerja Penjualan Produk</h2>
 
         <!-- Filter Section -->
-        <div class="container mx-auto py-6 px-4">
+        <div class="min-w-full py-6">
             <div class="bg-gray-800 shadow-lg rounded-lg p-6">
                 <form method="GET" action="{{ route('product.performance') }}" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Filter Area -->

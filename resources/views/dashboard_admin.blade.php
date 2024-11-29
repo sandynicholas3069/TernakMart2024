@@ -12,8 +12,8 @@
         <h1 class="font-bold text-lg mb-4">TernakMart - Admin</h1>
         <nav class="space-y-4">
             <a href="{{ route('dashboard') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Dashboard</a>
-            <a href="{{ route('product.index') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Produk</a>
-            <a href="{{ route('transaction.index') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Transaksi</a>
+            <a href="{{ route('product.index') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Product List</a>
+            <a href="{{ route('transaction.recap') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Transaction Recap</a>
             <a href="{{ route('product.performance') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Product Performance</a>
             <a href="{{ route('logout') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Logout</a>
         </nav>
