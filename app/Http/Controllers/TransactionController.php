@@ -14,7 +14,12 @@ class TransactionController extends Controller
     // Menampilkan daftar transaksi
     public function index()
     {
-        $transactions = Transaction::with('user', 'items')->get();
+        // Ambil transaksi milik pengguna yang sedang login
+        $transactions = Transaction::with('items')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        // Kirim data ke view
         return view('transaction', compact('transactions'));
     }
 
@@ -124,13 +129,34 @@ class TransactionController extends Controller
         return redirect()->route('transaction.index')->with('success', 'Transaksi berhasil dihapus!');
     }
 
-    public function productPerformance()
+    public function productPerformance(Request $request)
     {
-        // Fetch the total sales for each product
-        $productSales = TransactionItem::selectRaw('name, SUM(quantity) as total_sales')
-            ->groupBy('name')
-            ->get();
+        // Ambil parameter filter dari request
+        $day = $request->input('day');
+        $month = $request->input('month');
+        $year = $request->input('year');
 
-        return view('product_performance', compact('productSales'));
+        // Query dasar untuk menghitung total penjualan produk
+        $query = TransactionItem::selectRaw('name, SUM(quantity) as total_sales')
+            ->join('transactions', 'transaction_items.transaction_id', '=', 'transactions.id') // Pastikan join dengan tabel transaksi jika diperlukan
+            ->groupBy('name');
+
+        // Terapkan filter berdasarkan hari, bulan, atau tahun jika ada
+        if ($day) {
+            $query->whereDay('transactions.created_at', $day); // Filter berdasarkan hari
+        }
+        if ($month) {
+            $query->whereMonth('transactions.created_at', $month); // Filter berdasarkan bulan
+        }
+        if ($year) {
+            $query->whereYear('transactions.created_at', $year); // Filter berdasarkan tahun
+        }
+
+        // Eksekusi query
+        $productSales = $query->get();
+
+        // Kirim data ke view
+        return view('product_performance', compact('productSales', 'day', 'month', 'year'));
     }
+
 }

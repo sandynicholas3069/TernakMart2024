@@ -11,16 +11,42 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Navbar -->
     <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
-        <h1 class="font-bold text-lg">TernakMart - Kinerja Penjualan Produk</h1>
+        <h1 class="font-bold text-lg">TernakMart - Admin</h1>
         <div class="space-x-4">
-            <a href="{{ route('dashboard') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Dashboard</a>
-            <a href="{{ route('logout') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Logout</a>
+            <a href="{{ route('dashboard') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Back</a>
         </div>
     </nav>
 
     <!-- Main Content -->
     <div class="container mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-4">Kinerja Penjualan Produk</h2>
+        <h2 class="text-4xl text-center font-bold mb-4">Kinerja Penjualan Produk</h2>
+
+        <!-- Filter Section -->
+        <div class="container mx-auto py-6 px-4">
+            <div class="bg-gray-800 shadow-lg rounded-lg p-6">
+                <form method="GET" action="{{ route('product.performance') }}" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Filter Area -->
+                    <div>
+                        <label for="day" class="block text-sm font-medium text-gray-400">Tanggal</label>
+                        <input type="number" name="day" id="day" min="1" max="31" value="{{ request('day') }}" placeholder="Masukkan tanggal" class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-500 text-gray-200 px-4 py-2 focus:ring-gray-500 focus:border-gray-500">
+                    </div>
+                    <div>
+                        <label for="month" class="block text-sm font-medium text-gray-400">Bulan</label>
+                        <input type="number" name="month" id="month" min="1" max="12" value="{{ request('month') }}" placeholder="Masukkan bulan" class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-500 text-gray-200 px-4 py-2 focus:ring-gray-500 focus:border-gray-500">
+                    </div>
+                    <div>
+                        <label for="year" class="block text-sm font-medium text-gray-400">Tahun</label>
+                        <input type="number" name="year" id="year" min="2000" max="2100" value="{{ request('year') }}" placeholder="Masukkan tahun" class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-500 text-gray-200 px-4 py-2 focus:ring-gray-500 focus:border-gray-500">
+                    </div>
+                    <div class="col-span-3">
+                        <button type="submit" name="filter" value="true" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300 shadow-md">
+                            Filter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Canvas for Chart.js -->
         <canvas id="productPerformanceChart" width="400" height="200"></canvas>
     </div>
