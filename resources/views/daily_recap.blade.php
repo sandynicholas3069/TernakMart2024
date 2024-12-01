@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Recap - TernakMart</title>
+    <title>Revenue Recap Page TernakMart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,22 +13,22 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Navbar -->
     <nav class="bg-blue-500 p-4 flex justify-between items-center text-white">
-        <h1 class="font-bold text-lg">TernakMart - Daily Recap</h1>
+        <h1 class="font-bold text-lg">TernakMart - Admin</h1>
         <div class="space-x-4">
-            <a href="{{ route('dashboard') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Dashboard</a>
-            <a href="{{ route('logout') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Logout</a>
+            <a href="{{ route('dashboard') }}" class="bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Back</a>
         </div>
     </nav>
 
     <!-- Main Content -->
     <div class="container mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-4">Daily Recap</h2>
+        <h2 class="text-4xl text-center font-bold mb-4">Kinerja Penjualan Harian</h2>
         <!-- Canvas for Product Sales Chart -->
         <canvas id="dailyRecapChart" width="400" height="200"></canvas>
         <!-- Total Revenue -->
-        <div class="mt-6 p-4 bg-green-100 rounded shadow text-green-800">
+        <div class="mt-6 p-4 bg-green-100 rounded shadow text-green-800 mb-4">
             <h3 class="text-xl font-bold">Total Revenue Today: Rp{{ number_format($totalRevenue, 0, ',', '.') }}</h3>
         </div>
+        <h2 class="text-4xl text-center font-bold mb-4">Grafik Pendapatan Ternakmart</h2>
         <!-- Canvas for Daily Revenue Chart -->
         <canvas id="dailyRevenueChart" width="400" height="200" class="mt-6"></canvas>
     </div>

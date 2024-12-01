@@ -11,11 +11,10 @@
     <div class="bg-blue-500 text-white w-64 min-h-screen p-4">
         <h1 class="font-bold text-lg mb-4">TernakMart - Admin</h1>
         <nav class="space-y-4">
-            <a href="{{ route('dashboard') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Dashboard</a>
-            <a href="{{ route('product.index') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">List Produk</a>
-            <a href="{{ route('transaction.recap') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Recap Transaksi</a>
-            <a href="{{ route('product.performance') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Kinerja Produk</a>
-            <a href="{{ route('daily.recap') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Daily Recap</a>
+            <a href="{{ route('product.index') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Product List</a>
+            <a href="{{ route('transaction.recap') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Transaction Recap</a>
+            <a href="{{ route('product.performance') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Product Performance</a>
+            <a href="{{ route('daily.recap') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Revenue Recap</a>
             <a href="{{ route('logout') }}" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Logout</a>
         </nav>
     </div>
@@ -25,7 +24,7 @@
 
         <!-- Dashboard Admin Page -->
         <div class="text-center py-10">
-            <h1 class="text-4xl font-bold text-blue-800">
+            <h1 class="text-4xl font-bold text-blue-800 px-6">
                 Selamat Datang {{ Auth::user()->name }}, ke halaman Dashboard Admin!
             </h1>
 
