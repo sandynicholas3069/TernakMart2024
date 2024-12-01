@@ -12,9 +12,10 @@
         <h1 class="font-bold text-lg mb-4">TernakMart - Admin</h1>
         <nav class="space-y-4">
             <a href="<?php echo e(route('dashboard')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Dashboard</a>
-            <a href="<?php echo e(route('product.index')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Produk</a>
-            <a href="<?php echo e(route('transaction.index')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Transaksi</a>
-            <a href="<?php echo e(route('product.performance')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Product Performance</a>
+            <a href="<?php echo e(route('product.index')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">List Produk</a>
+            <a href="<?php echo e(route('transaction.recap')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Recap Transaksi</a>
+            <a href="<?php echo e(route('product.performance')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Kinerja Produk</a>
+            <a href="<?php echo e(route('daily.recap')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Daily Recap</a>
             <a href="<?php echo e(route('logout')); ?>" class="block bg-white text-blue-500 px-4 py-2 rounded hover:underline transition-colors duration-300">Logout</a>
         </nav>
     </div>

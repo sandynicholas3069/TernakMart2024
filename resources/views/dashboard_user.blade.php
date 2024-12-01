@@ -20,7 +20,7 @@
     <!-- Dashboard User Page -->
     <div class="text-center py-10">
         <h1 class="text-4xl font-bold text-blue-800">
-            Selamat Datang, {{ Auth::user()->name }}, ke halaman Dashboard User!
+            Selamat Datang {{ Auth::user()->name }}, ke halaman Dashboard User!
         </h1>
 
         <img src="{{ asset('images/logo.png') }}" alt="LogoTernakMart" class="mx-auto mt-8 w-auto h-auto">

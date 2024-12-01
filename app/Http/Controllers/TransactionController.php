@@ -188,4 +188,30 @@ class TransactionController extends Controller
         return view('recap', compact('transactions', 'totalRevenue', 'title', 'day', 'month', 'year'));
     }
 
+    public function dailyRecap()
+    {
+        // Get today's date
+        $today = now()->startOfDay();
+
+        // Fetch the total sales for each product sold today
+        $productSales = TransactionItem::selectRaw('name, SUM(quantity) as total_sales')
+            ->whereHas('transaction', function ($query) use ($today) {
+                $query->where('transaction_date', '>=', $today);
+            })
+            ->groupBy('name')
+            ->get();
+
+        // Calculate the total revenue for today
+        $totalRevenue = Transaction::where('transaction_date', '>=', $today)
+            ->sum('total_price');
+
+        // Fetch daily total revenue for the past week
+        $dailyRevenue = Transaction::selectRaw('DATE(transaction_date) as date, SUM(total_price) as total_revenue')
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get();
+
+        return view('daily_recap', compact('productSales', 'totalRevenue', 'dailyRevenue'));
+    }
+
 }
