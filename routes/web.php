@@ -22,3 +22,4 @@ Route::post('/transactions', [TransactionController::class, 'store'])->name('tra
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transaction.destroy');
 Route::get('/transactions/recap', [TransactionController::class, 'recapTransaction'])->name('transaction.recap');
 Route::get('/product-performance', [TransactionController::class, 'productPerformance'])->name('product.performance');
+Route::get('/daily-recap', [TransactionController::class, 'dailyRecap'])->name('daily.recap');
